@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>编码工具 - Jitwxs</title>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    	textarea{outline:none;resize:none;}
+    </style>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="http://www.jitwxs.cn">
+	        <img alt="Brand" src="assets/images/logo.png" style="width: 20px;height: 20px;display:inline-block;vertical-align: middle;">
+	        <span style="padding-left: 20px; display:inline-block;vertical-align: middle;">Jitwxs</span>
+	      </a>
+	      <p class="navbar-text navbar-left"><a href="index.html" class="navbar-link">返回首页</a></p>
+	    </div>
+	    <p class="navbar-text" style="padding-left: 650px;">编码工具</p>
+	    <p class="navbar-text navbar-right" style="padding-right: 100px;">Jitwxs的工具箱</p>
+	  </div>
+	</nav>
+    <div class="container">
+	  <!-- Nav tabs -->
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li role="presentation" class="active"><a href="#unicode_tab" aria-controls="unicode" role="tab" data-toggle="tab">Unicode编码转换</a></li>
+	    <li role="presentation"><a href="#url_tab" aria-controls="url" role="tab" data-toggle="tab">Url编码/解码</a></li>
+	  </ul>
+	  <!-- Tab panes -->
+	  <div class="tab-content">
+	    <div role="tabpanel" class="tab-pane fade in active" id="unicode_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	                <textarea class="form-control" id="unicode_textarea_1" rows="6" placeholder="请把你需要转换的内容粘贴在这里"></textarea>
+	                <div style="padding-top: 10px; padding: 10px;">
+	                    <button class="btn btn-primary" onclick="ascii2unciode()">ASCII 转  Unicode</button>
+	                    <button class="btn btn-primary" onclick="unicode2ascii()">Unicode 转 ASCII</button>
+	                    <button class="btn btn-primary" onclick="unciode2chinese()">Unicode 转 中文</button>
+	                    <button class="btn btn-primary" onclick="chinese2unicode()">中文 转 Unicode</button>
+	                    <a href="javascript:void(0);" onclick="clear_unicode()" style="padding-left: 10px;">清空数据</a>
+	                </div>
+	                <textarea class="form-control" id="unicode_textarea_2" rows="6" placeholder="转换后的结果"></textarea>
+	            </div>
+	            <div class="panel-footer">
+	              本工具是Unicode编码转换，为您提供ASCII与Unicode互转，Unicode与中文互转，在文本框里输入要转换的内容，然后点击要转换的类型按钮，转换完成后即可看到对应的内容。
+	            </div>
+	        </div>
+	    </div>
+	    <div role="tabpanel" class="tab-pane fade" id="url_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	                <textarea class="form-control" id="url_textarea_1" rows="6" placeholder="请把你需要转换的内容粘贴在这里"></textarea>
+	                <div style="padding-top: 10px; padding: 10px;">
+	                    <button class="btn btn-primary" onclick="url_encode()">编码</button>
+	                    <button class="btn btn-primary" onclick="url_decode()">解码</button>
+	                    <a href="javascript:void(0);" onclick="clear_url()" style="padding-left: 10px;">清空数据</a>
+	                </div>
+	                <textarea class="form-control" id="url_textarea_2" rows="6" placeholder="转换后的结果"></textarea>
+	            </div>
+	            <div class="panel-footer">
+	              为了让包含中文的URL可以使用，您可以使用本工具对中文进行UrlEncode编码。
+	            </div>
+	        </div>
+	    </div>
+	  </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+	  <div class="container" style="text-align: center;">
+	    <div><a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:gray;">苏 ICP 备 16061429 号</a></div>
+	        <div style="margin-top: 5px;">Designed By <a href="http://www.jitwxs.cn" target="_blank"> Jitwxs </a> &copy; 2018 </div>
+	  </div>
+	</nav>
+        
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script>
+var unicode1 = $("#unicode_textarea_1");
+var unicode2 = $("#unicode_textarea_2");
+
+function ascii2unciode() {
+	var content = unicode1.val();
+	result = '';  
+	for (var i=0; i<content.length; i++)  
+		result += '&#' + content.charCodeAt(i) + ';';
+	unicode2.val(result);
+}
+
+function unicode2ascii() {
+	var content = unicode1.val();
+	var code = content.match(/&#(\d+);/g);  
+	result= '';  
+	for (var i=0; i<code.length; i++)  
+	    result += String.fromCharCode(code[i].replace(/[&#;]/g, ''));  
+	unicode2.val(result);
+}
+
+function unciode2chinese() {
+	var content = unicode1.val();
+	 unicode2.val(unescape(content.replace(/\\u/g, '%u')));
+}
+
+function chinese2unicode() {
+	var content = unicode1.val();
+    unicode2.val(content.replace(/([\u4E00-\u9FA5]|[\uFE30-\uFFA0])/g,function(){
+      return "\\u" + RegExp["$1"].charCodeAt(0).toString(16);
+    }));
+}
+
+function clear_unicode() {
+	unicode1.val("");
+	unicode2.val("");
+}
+
+</script>
+<script>
+var url1 = $("#url_textarea_1");
+var url2 = $("#url_textarea_2");
+
+function url_encode() {
+	var content = url1.val();
+	url2.val(encodeURI(content));
+}
+
+function url_decode() {
+	var content = url1.val();
+	url2.val(decodeURI(content));
+}
+
+function clear_url() {
+	url1.val("");
+	url2.val("");
+}
+</script>
+</body>
+</html>

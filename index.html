@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>工具箱 - Jitwxs</title>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    	textarea{outline:none;resize:none;}
+    </style>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="http://www.jitwxs.cn">
+	        <img alt="Brand" src="assets/images/logo.png" style="width: 20px;height: 20px;display:inline-block;vertical-align: middle;">
+	        <span style="padding-left: 20px; display:inline-block;vertical-align: middle;">Jitwxs</span>
+	      </a>
+	      <p class="navbar-text navbar-left"><a href="index.html" class="navbar-link">返回首页</a></p>
+	    </div>
+	    <p class="navbar-text" style="padding-left: 650px;">首页</p>
+	    <p class="navbar-text navbar-right" style="padding-right: 100px;">Jitwxs的工具箱</p>
+	  </div>
+	</nav>
+    <div class="container">
+	  <div class="panel panel-info">
+            <div class="panel-heading">
+              "工欲善其事，必先利其器。"
+            </div>
+            <div class="panel-body">
+            	<ul class="list-group">
+				  <li class="list-group-item">
+				  	<a href="code.html">代码工具</a><span style="float: right;">【HTML/CSS/JS格式化、HTML - JS转换】</span>
+				  </li>
+				  <li class="list-group-item">
+				  	<a href="json.html">JSON工具</a><span style="float: right;">【JSON解析、格式化、验证】</span>
+				  </li>
+				  <li class="list-group-item">
+				  	<a href="encode.html">编码工具</a><span style="float: right;">【Unicode/Url编码、解码】</span>
+				  </li>
+				  <li class="list-group-item">
+				  	<a href="picture.html">图片工具</a><span style="float: right;">【图片 - Base64转换】</span>
+				  </li>
+				  <li class="list-group-item">
+				  	<a href="timestamp.html">时间戳工具</a><span style="float: right;">【时间戳 - 日期转换】</span>
+				  </li>
+				</ul>
+            </div>
+            <div class="panel-footer" style="text-align: center;">
+              当前时间：<span id="nowDate"></span>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+	  <div class="container" style="text-align: center;">
+	    <div><a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:gray;">苏 ICP 备 16061429 号</a></div>
+	        <div style="margin-top: 5px;">Designed By <a href="http://www.jitwxs.cn" target="_blank"> Jitwxs </a> &copy; 2018 </div>
+	  </div>
+	</nav>
+        
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	window.onload = function() {
+        var show = document.getElementById("nowDate");
+        setInterval(function() {
+            show.innerHTML = getNowDate();
+        }, 1000);
+    };
+
+    function getNowDate() {
+	    var date = new Date();
+	    return date.Format("yyyy年MM月dd日 HH:mm:ss");
+	}
+	Date.prototype.Format = function (fmt) {
+	    var o = {
+	        "M+": this.getMonth() + 1,
+	        "d+": this.getDate(),
+	        "H+": this.getHours(),
+	        "m+": this.getMinutes(),
+	        "s+": this.getSeconds(),
+	        "S+": this.getMilliseconds()
+	    };
+
+	    //因位date.getFullYear()出来的结果是number类型的,所以为了让结果变成字符串型，下面有两种方法：
+	    if (/(y+)/.test(fmt)) {
+	        //第一种：利用字符串连接符“+”给date.getFullYear()+""，加一个空字符串便可以将number类型转换成字符串。
+	        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	    }
+	    for (var k in o) {
+	        if (new RegExp("(" + k + ")").test(fmt)) {
+	            //第二种：使用String()类型进行强制数据类型转换String(date.getFullYear())，这种更容易理解。
+	            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(String(o[k]).length)));
+	        }
+	    }
+	    return fmt;
+	};
+</script>
+</body>
+</html>

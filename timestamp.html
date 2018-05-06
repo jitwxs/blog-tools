@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>时间戳工具 - Jitwxs</title>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    	textarea{outline:none;resize:none;}
+    </style>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="http://www.jitwxs.cn">
+	        <img alt="Brand" src="assets/images/logo.png" style="width: 20px;height: 20px;display:inline-block;vertical-align: middle;">
+	        <span style="padding-left: 20px; display:inline-block;vertical-align: middle;">Jitwxs</span>
+	      </a>
+	      <p class="navbar-text navbar-left"><a href="index.html" class="navbar-link">返回首页</a></p>
+	    </div>
+	    <p class="navbar-text" style="padding-left: 650px;">时间戳工具</p>
+	    <p class="navbar-text navbar-right" style="padding-right: 100px;">Jitwxs的工具箱</p>
+	  </div>
+	</nav>
+    <div class="container">
+	  <div class="panel panel-info">
+            <div class="panel-heading">
+              时间戳（单位：秒）转换
+            </div>
+            <div class="panel-body">
+            	<div class="form-group">
+            		<label>现在的Unix时间戳是：<span id="now_timestamp"></span></label>
+            	</div>
+            	<div class="form-group">
+				    <input type="text" class="form-control" id="input_timestamp" placeholder="请输入时间戳">
+				  </div>
+            	<div class="form-group">
+				    <button class="btn btn-success" onclick="convertDate()">转换为北京时间</button>
+				</div>
+				<div class="form-group">
+				    <input type="text" class="form-control" id="output_date" readonly="true">
+				</div><hr>
+				<div class="form-group">
+					<form name="beijing2unix" class="form-inline">
+						<div class="form-group">
+							<label>北京时间</label>
+							<input type="text" class="form-control" style="width:66px;text-align:center" name="year" maxlength="4"> 年
+							<input type="text" class="form-control" style="width:46px;text-align:center" name="month" maxlength="2"> 月
+							<input type="text" class="form-control" style="width:46px;text-align:center" name="day" maxlength="2"> 日
+							<input type="text" class="form-control" style="width:46px;text-align:center" name="hour" maxlength="2"> 时
+							<input type="text" class="form-control" style="width:46px;text-align:center" name="minute" maxlength="2"> 分
+							<input type="text" class="form-control" style="width:46px;text-align:center" name="second" maxlength="2"> 秒
+						</div>
+					</form>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-info" onclick="convertTimestamp()">转换为Unix时间戳 ↓</button>
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" id="output_timestamp" readonly="true">
+				</div>
+            </div>
+            <div class="panel-footer">
+              时间戳和时间的互相转换
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+	  <div class="container" style="text-align: center;">
+	    <div><a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:gray;">苏 ICP 备 16061429 号</a></div>
+	        <div style="margin-top: 5px;">Designed By <a href="http://www.jitwxs.cn" target="_blank"> Jitwxs </a> &copy; 2018 </div>
+	  </div>
+	</nav>
+        
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	window.onload = function() {
+        var show = document.getElementById("now_timestamp");
+        setInterval(function() {
+            show.innerHTML = Math.round(new Date().getTime()/1000);
+        }, 1000);
+    };
+
+    function convertDate() {
+    	var input = $("#input_timestamp").val() * 1000;
+    	if(input === 0) {
+			$("#output_date").val("");
+    	} else {
+    		var date = new Date(input);
+    		$("#output_date").val(date.toLocaleString());
+    	}
+    }
+
+    function convertTimestamp() {
+    	var humanDate = new Date(Date.UTC(document.beijing2unix.year.value, (stripLeadingZeroes(document.beijing2unix.month.value)-1), stripLeadingZeroes(document.beijing2unix.day.value), stripLeadingZeroes(document.beijing2unix.hour.value), stripLeadingZeroes(document.beijing2unix.minute.value), stripLeadingZeroes(document.beijing2unix.second.value)));
+		$("#output_timestamp").val((humanDate.getTime()/1000 - 8*60*60));
+    }
+
+	function stripLeadingZeroes(input) {
+	    if((input.length > 1) && (input.substr(0,1) == "0"))
+			return input.substr(1);
+		else
+			return input;
+	}
+</script>
+</body>
+</html>

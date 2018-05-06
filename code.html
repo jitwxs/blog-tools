@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>代码工具 - Jitwxs</title>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    	textarea{outline:none;resize:none;}
+    </style>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="http://www.jitwxs.cn">
+	        <img alt="Brand" src="assets/images/logo.png" style="width: 20px;height: 20px;display:inline-block;vertical-align: middle;">
+	        <span style="padding-left: 20px; display:inline-block;vertical-align: middle;">Jitwxs</span>
+	      </a>
+	      <p class="navbar-text navbar-left"><a href="index.html" class="navbar-link">返回首页</a></p>
+	    </div>
+	    <p class="navbar-text" style="padding-left: 650px;">代码工具</p>
+	    <p class="navbar-text navbar-right" style="padding-right: 100px;">Jitwxs的工具箱</p>
+	  </div>
+	</nav>
+    <div class="container">
+	  <!-- Nav tabs -->
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li role="presentation" class="active"><a href="#html_tab" aria-controls="html" role="tab" data-toggle="tab">HTML/JS 格式化</a></li>
+	    <li role="presentation"><a href="#css_tab" aria-controls="css" role="tab" data-toggle="tab">CSS 格式化</a></li>
+	    <li role="presentation"><a href="#html2js_tab" aria-controls="html2js" role="tab" data-toggle="tab">HTML/JS转换</a></li>
+	  </ul>
+	  <!-- Tab panes -->
+	  <div class="tab-content">
+	    <div role="tabpanel" class="tab-pane fade in active" id="html_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	                <textarea class="form-control" id="html_textarea_1" rows="5" placeholder="请把你需要格式化的代码粘贴在这里"></textarea>
+	                <div style="padding-top: 10px; padding: 10px;">
+	                    <select id="tabsize">
+	                        <option value="1">制表符缩进</option>
+	                        <option value="2">2个空格缩进</option>
+	                        <option selected="selected" value="4">4个空格缩进</option>
+	                        <option value="8">8个空格缩进</option>
+	                    </select>
+	                    <button class="btn btn-primary" onclick="html_format()">格式化</button>
+	                    <button class="btn btn-primary" onclick="pack_js(0)">普通压缩</button>
+	                    <button class="btn btn-primary" onclick="pack_js(1)">加密压缩</button>
+	                    <a href="javascript:void(0);" onclick="clear_html()" style="padding-left: 10px;">清空数据</a>
+	                </div>
+	                <textarea class="form-control" id="html_textarea_2" rows="5" placeholder="格式化后的结果"></textarea>
+	            </div>
+	            <div class="panel-footer">
+	                可以把混乱的代码进行分行，整齐的显示出来。
+	            </div>
+        	</div>
+	    </div>
+	    <div role="tabpanel" class="tab-pane fade" id="css_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	                <textarea class="form-control" id="css_textarea_1" rows="5" placeholder="请把你需要格式化的代码粘贴在这里"></textarea>
+	                <div style="padding-top: 10px; padding: 10px;">
+	                    <button class="btn btn-primary" onclick="css_foramt()">格式化</button>
+	                    <button class="btn btn-primary" onclick="css_compress()">压缩</button>
+	                    <a href="javascript:void(0);" onclick="clear_css()" style="padding-left: 10px;">清空数据</a>
+	                </div>
+	                <textarea class="form-control" id="css_textarea_2" rows="5" placeholder="格式化后的结果"></textarea>
+	            </div>
+	            <div class="panel-footer">
+	                CSS代码格式化工具可实现CSS代码格式化和CSS在线压缩。压缩CSS使得体积减小,传输速度快，格式化CSS在线转换成易编写、易读。
+	            </div>
+	        </div>
+	    </div>
+	    <div role="tabpanel" class="tab-pane fade" id="html2js_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	                <textarea class="form-control" id="htmljs_textarea_1" rows="5" placeholder="请把你需要转换的代码粘贴在这里"></textarea>
+	                <div style="padding-top: 10px; padding: 10px;">
+	                    <button class="btn btn-primary" onclick="html2js()">HTML 转 JS</button>
+	                    <button class="btn btn-primary" onclick="js2html()">JS 转 HTML</button>
+	                    <a href="javascript:void(0);" onclick="clear_html_js()" style="padding-left: 10px;">清空数据</a>
+	                </div>
+	                <textarea class="form-control" id="htmljs_textarea_2" rows="5" placeholder="转换后的结果"></textarea>
+	            </div>
+	            <div class="panel-footer">
+	                可以把html内容转换成js输出，反之也可以转换回来
+	            </div>
+	        </div>
+	    </div>
+	  </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+	  <div class="container" style="text-align: center;">
+	    <div><a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:gray;">苏 ICP 备 16061429 号</a></div>
+	        <div style="margin-top: 5px;">Designed By <a href="http://www.jitwxs.cn" target="_blank"> Jitwxs </a> &copy; 2018 </div>
+	  </div>
+	</nav>
+        
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/htmlformat.js"></script>
+<script src="assets/js/jsFormat.js"></script>
+<script src="assets/js/jsBase.js"></script>
+<script>
+    var html1 = $("#html_textarea_1");
+    var html2 = $("#html_textarea_2");
+
+    function html_format() {
+        var content = html1.val();
+        js_source = content.replace(/^\s+/, '');
+        tabsize = $("#tabsize").val();
+        tabchar = ' ';
+        if (tabsize == 1)
+            tabchar = '\t';
+
+        if (js_source && js_source.charAt(0) === '<')
+            html2.val(style_html(js_source, tabsize, tabchar, 80));
+        else
+            html2.val(js_beautify(js_source, tabsize, tabchar));
+    }
+
+    function pack_js(base64) {
+        var content = html1.val();
+        var packer = new Packer;
+        if (base64)
+            html2.val(packer.pack(content, 1, 0));
+        else
+            html2.val(packer.pack(content, 0, 0));
+    }
+
+    function clear_html() {
+        html1.val("");
+        html2.val("");
+    }
+</script>
+<script>
+    var css1 = $("#css_textarea_1");
+    var css2 = $("#css_textarea_2");
+
+    function css_foramt() {
+        var code = css1.val();
+        code = code.replace(/(\s){2,}/ig, '$1');
+        code = code.replace(/(\S)\s*\{/ig, '$1 {');
+        code = code.replace(/\*\/(.[^\}\{]*)}/ig, '\*\/\n$1}');
+        code = code.replace(/\/\*/ig, '\n\/\*');
+        code = code.replace(/;\s*(\S)/ig, ';\n\t$1');
+        code = code.replace(/\}\s*(\S)/ig, '\}\n$1');
+        code = code.replace(/\n\s*\}/ig, '\n\}');
+        code = code.replace(/\{\s*(\S)/ig, '\{\n\t$1');
+        code = code.replace(/(\S)\s*\*\//ig, '$1\*\/');
+        code = code.replace(/\*\/\s*([^\}\{]\S)/ig, '\*\/\n\t$1');
+        code = code.replace(/(\S)\}/ig, '$1\n\}');
+        code = code.replace(/(\n){2,}/ig, '\n');
+        code = code.replace(/:/ig, ':');
+        code = code.replace(/  /ig, ' ');
+        css2.val(code);
+    }
+
+    function css_compress() {
+        var code = css1.val();
+
+        code = code.replace(/\r\n/ig, '');
+        code = code.replace(/(\s){2,}/ig, '$1');
+        code = code.replace(/\t/ig, '');
+        code = code.replace(/\n\}/ig, '\}');
+        code = code.replace(/\n\{\s*/ig, '\{');
+        code = code.replace(/(\S)\s*\}/ig, '$1\}');
+        code = code.replace(/(\S)\s*\{/ig, '$1\{');
+        code = code.replace(/\{\s*(\S)/ig, '\{$1');
+        css2.val(code);
+    }
+
+    function clear_css() {
+        css1.val("");
+        css2.val("");
+    }
+</script>
+<script>
+    var htmljs1 = $("#htmljs_textarea_1");
+    var htmljs2 = $("#htmljs_textarea_2");
+
+    function html2js() {
+        htmljs2.val("document.writeln(\""+htmljs1.val().replace(/\\/g,"\\\\").replace(/\//g,"\\/").replace(/\'/g,"\\\'").replace(/\"/g,"\\\"").split('\r\n').join("\");\ndocument.writeln(\"")+"\")");
+    }
+
+    function js2html() {
+        htmljs2.val(htmljs1.val().replace(/document.writeln\("/g,"").replace(/"\);/g,"").replace(/\\\"/g,"\"").replace(/\\\'/g,"\'").replace(/\\\//g,"\/").replace(/\\\\/g,"\\"));
+    }
+
+    function clear_html_js() {
+        htmljs1.val("");
+        htmljs2.val("");
+    }
+</script>
+</body>
+</html>

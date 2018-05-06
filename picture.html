@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>图片工具 - Jitwxs</title>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    	textarea{outline:none;resize:none;}
+    </style>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="http://www.jitwxs.cn">
+	        <img alt="Brand" src="assets/images/logo.png" style="width: 20px;height: 20px;display:inline-block;vertical-align: middle;">
+	        <span style="padding-left: 20px; display:inline-block;vertical-align: middle;">Jitwxs</span>
+	      </a>
+	      <p class="navbar-text navbar-left"><a href="index.html" class="navbar-link">返回首页</a></p>
+	    </div>
+	    <p class="navbar-text" style="padding-left: 650px;">图片工具</p>
+	    <p class="navbar-text navbar-right" style="padding-right: 100px;">Jitwxs的工具箱</p>
+	  </div>
+	</nav>
+    <div class="container">
+	  <div class="panel panel-info">
+            <div class="panel-heading">
+                Base64转换
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                	<div class="r" style="float:right;">
+	                    <input onclick="copyUrl()" value="复制" class="btn btn-info" type="button">
+	                    <input onclick="clearBase64()" value="清空" class="btn btn-info" type="button">
+                    </div>
+                	<label>点击这里选择选择要转换成Base64的图片</label>
+                	<input accept="image/*" name="upimage" id="upload_file" type="file">
+                    <div class="span" id="update_file_label"></div>
+                </div>
+                <div class="form-group">
+                    <textarea id="base64_output" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-info" onclick="convert_pic()">还原生成的Base64编码为图片：</button><strong id="img_size" style="padding-left:10px; color:red;"> </strong>
+				</div>
+				<div class="form-group">
+					<img id="img_prev" src="" style="max-width:100%;" data-bd-imgshare-binded="1">
+				</div>
+            </div>
+            <div class="panel-footer">
+				1.支持 PNG、GIF、JPG、BMP、ICO 格式。<br><br>
+				2.将图片转换为Base64编码，可以让你很方便地在没有上传文件的条件下将图片插入其它的网页、编辑器中。这对于一些小的图片是极为方便的，因为你不需要再去寻找一个保存图片的地方。<br><br>
+				3.假定生成的代码为"data:image/jpeg;base64, ....."，那么你只需要全部复制，然后在插入图片的时候，地址填写这段代码即可。<br><br>
+				4.CSS中使用：<pre>background-image: url("data:image/png;base64,iVBORw0KGgo=...");</pre><br>
+				5.HTML中使用：<pre>&lt;img src="data:image/png;base64,iVBORw0KGgo=..." /&gt;</pre><br>
+				6.图片转换Base64，无线开发、HTML5、CSS3必备的工具，CSS DataURI Base64 工具。<br><br>
+				7.将图片转换成base64编码的，在web网上一般用于小图片上，不仅可以减少图片的请求数量（集合到js、css代码中），还可以防止因为一些相对路径等问题导致图片404错误。<br>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+	  <div class="container" style="text-align: center;">
+	    <div><a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:gray;">苏 ICP 备 16061429 号</a></div>
+	        <div style="margin-top: 5px;">Designed By <a href="http://www.jitwxs.cn" target="_blank"> Jitwxs </a> &copy; 2018 </div>
+	  </div>
+	</nav>
+        
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	document.getElementById("upload_file").onchange = function () {
+		$("#update_file_label").html(this.value);
+	    gen_base64();
+	};
+
+	function $_(id) {
+		return document.getElementById(id);
+	}
+
+	function gen_base64() {
+		$_('base64_output').value = '';
+		$_('img_size').innerHTML = '';
+		$_('img_prev').src = '';
+		var file = $_('upload_file').files[0];
+		if(!/image\/\w+/.test(file.type)){   
+			alert("请确保文件为图像类型"); 
+			return false; 
+		}
+		r = new FileReader();  //本地预览
+		r.onload = function(){
+			$_('base64_output').value = r.result;
+			$_('img_size').innerHTML = "    图片大小：" + Math.round(r.result.length/1024*1000)/1000 + " KB";
+		}
+		r.readAsDataURL(file);    //Base64
+	}
+
+	function convert_pic() {
+		$_('img_prev').src = '';
+		$_('img_prev').src = $_('base64_output').value;
+	}
+
+	window.onload = function() {
+		if ( typeof(FileReader) === 'undefined' ){
+			alert("抱歉，你的浏览器不支持 FileReader，请使用现代浏览器操作！");
+			$_('upload_file').disabled = true;
+		}
+	}
+
+	function copyUrl(){
+      var val = $("#base64_output").val();
+      if(val === ''){
+          alert('没有要复制的内容！');
+          return false;
+      }
+      $("#base64_output").select(); // 选择对象
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      alert("已复制好，可贴粘。");
+    }
+
+    function clearBase64() {
+    	$("#upload_file").val("")
+    	$("#base64_output").val("");
+    	$("#img_size").text("");
+    	$("#update_file_label").text("");
+    	$("#img_prev").attr("src","");
+    }
+</script>
+</body>
+</html>
