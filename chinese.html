@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>汉字工具 - Jitwxs</title>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    	textarea{outline:none;resize:none;}
+    </style>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="http://www.jitwxs.cn">
+	        <img alt="Brand" src="assets/images/logo.png" style="width: 20px;height: 20px;display:inline-block;vertical-align: middle;">
+	        <span style="padding-left: 20px; display:inline-block;vertical-align: middle;">Jitwxs</span>
+	      </a>
+	      <p class="navbar-text navbar-left"><a href="index.html" class="navbar-link">返回首页</a></p>
+	    </div>
+	    <p class="navbar-text" style="padding-left: 650px;">汉字工具</p>
+	    <p class="navbar-text navbar-right" style="padding-right: 100px;">Jitwxs的工具箱</p>
+	  </div>
+	</nav>
+    <div class="container">
+	  <!-- Nav tabs -->
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li role="presentation" class="active"><a href="#pinyin_tab" aria-controls="unicode" role="tab" data-toggle="tab">汉字转拼音</a></li>
+	    <li role="presentation"><a href="#complex_tab" aria-controls="complex_chinese" role="tab" data-toggle="tab">简繁体转换</a></li>
+	    <li role="presentation"><a href="#number_tab" aria-controls="number_chinese" role="tab" data-toggle="tab">数字转大写</a></li>
+	  </ul>
+	  <!-- Tab panes -->
+	  <div class="tab-content">
+	    <div role="tabpanel" class="tab-pane fade in active" id="unicode_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	                <textarea class="form-control" id="pinyin_textarea_1" rows="6" placeholder="请把你需要转换的内容粘贴在这里"></textarea>
+	                <div style="padding-top: 10px; padding: 10px;">
+	                    <button class="btn btn-primary" onclick="convert_pinyin()">转换</button>
+	                    <a href="javascript:void(0);" onclick="clear_pinyin()" style="padding-left: 10px;">清空数据</a>
+	                </div>
+	                <textarea class="form-control" id="pinyin_textarea_2" rows="6" placeholder="转换后的结果"></textarea>
+	            </div>
+	            <div class="panel-footer">
+	              该工具可以把你输入的中文按要求翻译成拼音。
+	            </div>
+	        </div>
+	    </div>
+	    <div role="tabpanel" class="tab-pane fade" id="complex_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	                <textarea class="form-control" id="complex_textarea_1" rows="6" placeholder="请把你需要转换的内容粘贴在这里"></textarea>
+	                <div style="padding-top: 10px; padding: 10px;">
+	                    <button class="btn btn-primary" onclick="convert_simple()">转换为简体</button>
+	                    <button class="btn btn-primary" onclick="convert_complex()">转换为繁体</button>
+	                    <a href="javascript:void(0);" onclick="clear_complex()" style="padding-left: 10px;">清空数据</a>
+	                </div>
+	                <textarea class="form-control" id="complex_textarea_2" rows="6" placeholder="转换后的结果"></textarea>
+	            </div>
+	            <div class="panel-footer">
+	              通过本工具可以把文字在简体、繁体之间互相转换。
+	            </div>
+	        </div>
+	    </div>
+	     <div role="tabpanel" class="tab-pane fade" id="number_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	                <textarea class="form-control" id="number_textarea_1" rows="6" placeholder="请把你需要转换的内容粘贴在这里"></textarea>
+	                <div style="padding-top: 10px; padding: 10px;">
+	                    <button class="btn btn-primary" onclick="convert_capital()">转换为大写</button>
+	                    <button class="btn btn-primary" onclick="convert_number()" disabled="disabled">转换为数字</button>
+	                    <a href="javascript:void(0);" onclick="clear_number()" style="padding-left: 10px;">清空数据</a>
+	                </div>
+	                <textarea class="form-control" id="number_textarea_2" rows="6" placeholder="转换后的结果"></textarea>
+	            </div>
+	            <div class="panel-footer">
+	              	通过本工具可以实现人民币大写转换，人民币金额用到的中文大写汉字：零、壹、贰、叁、肆、伍、陆、柒、捌、玖、拾、佰、仟、万、亿。
+					<table class="table table-condensed" cellspacing="1" cellpadding="3" style="padding-top: 10px;">
+					<tbody><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>0</th><th>十</th><th>百</th><th>千</th></tr><tr><td>壹</td><td>贰</td><td>叁</td><td>肆</td><td>伍</td><td>陆</td><td>柒</td><td>捌</td><td>玖</td><td>零</td><td>拾</td><td>佰</td><td>仟</td></tr></tbody>
+					</table>
+	            </div>
+	        </div>
+	    </div>
+	  </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+	  <div class="container" style="text-align: center;">
+	    <div><a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:gray;">苏 ICP 备 16061429 号</a></div>
+	        <div style="margin-top: 5px;">Designed By <a href="http://www.jitwxs.cn" target="_blank"> Jitwxs </a> &copy; 2018 </div>
+	  </div>
+	</nav>
+        
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/pinyinData.js"></script>
+<script src="assets/js/chinese.js"></script>
+</body>
+</html>
