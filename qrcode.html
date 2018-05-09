@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>二维码工具 - Jitwxs</title>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></scr ipt>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    	textarea{outline:none;resize:none;}
+    </style>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="https://www.jitwxs.cn">
+	        <img alt="Brand" src="assets/images/logo.png" style="width: 20px;height: 20px;display:inline-block;vertical-align: middle;">
+	        <span style="padding-left: 20px; display:inline-block;vertical-align: middle;">Jitwxs</span>
+	      </a>
+	      <p class="navbar-text navbar-left"><a href="index.html" class="navbar-link">返回首页</a></p>
+	    </div>
+	    <p class="navbar-text" style="padding-left: 650px;">二维码工具</p>
+	    <p class="navbar-text navbar-right" style="padding-right: 100px;">Jitwxs的工具箱</p>
+	  </div>
+	</nav>
+
+    <div class="container">
+	  <!-- Nav tabs -->
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li role="presentation" class="active"><a href="#genQr_tab" aria-controls="unicode" role="tab" data-toggle="tab">二维码生成</a></li>
+	    <li role="presentation"><a href="#disQr_tab" aria-controls="url" role="tab" data-toggle="tab">二维码识别</a></li>
+	  </ul>
+	  <!-- Tab panes -->
+	  <div class="tab-content">
+	    <div role="tabpanel" class="tab-pane fade in active" id="genQr_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	            	<textarea class="form-control" id="input_qr" rows="6" placeholder="请输入二维码内容"></textarea>
+					<form class="form-inline">
+					  <div class="form-group">
+					    <label >纠错等级</label>
+					    <select id="checkErrorLevel" class="form-control">
+						  <option>L</option>
+						  <option>M</option>
+						  <option>Q</option>
+						  <option selected>H</option>
+						</select>
+					  </div>
+						<button class="btn btn-primary" onclick="genQr()" type="button">生成二维码</button>
+					  <a href="javascript:void(0);" onclick="clear_gen()" style="padding-left: 10px;">清空数据</a>
+					</form>
+	                 <div id="qrcodeDiv" style="height: 100px; margin-top: 10px;"></div>
+	            </div>
+	            <div class="panel-footer">
+	              基于QRCode.js实现的二维码生成
+	            </div>
+	        </div>
+	    </div>
+	    <div role="tabpanel" class="tab-pane fade" id="disQr_tab">
+	    	<div class="panel panel-info">
+	            <div class="panel-body">
+	            	<label>上传图片：</label>
+	            	<input type="file" onchange="getUrl(this,'file-url')"/>
+			        <p class="form-control-static"></p>
+	            </div>
+	            <div class="panel-footer">
+	              基于llqrcode.js实现的二维码识别
+	            </div>
+	        </div>
+	    </div>
+	  </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+	  <div class="container" style="text-align: center;">
+	    <div><a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:gray;">苏 ICP 备 16061429 号</a></div>
+	        <div style="margin-top: 5px;">Designed By <a href="http://www.jitwxs.cn" target="_blank"> Jitwxs </a> &copy; 2018 </div>
+	  </div>
+	</nav>
+        
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/qrcode.min.js"></script>
+<script src="assets/js/llqrcode.js"></script>
+<script src="assets/js/analyticCode.js"></script>
+<script>
+	var elements = new Array(
+			{width : 100,height : 100,correctLevel : QRCode.CorrectLevel.L},
+			{width : 100,height : 100,correctLevel : QRCode.CorrectLevel.M},
+			{width : 100,height : 100,correctLevel : QRCode.CorrectLevel.Q},
+			{width : 100,height : 100,correctLevel : QRCode.CorrectLevel.H});
+
+	function genQr () {		
+		var elText = document.getElementById("input_qr");
+		if (!elText.value) {
+			alert("Input a text");
+			elText.focus();
+			return;
+		}
+		
+		var index = $("#checkErrorLevel").prop('selectedIndex');
+
+		var qrcodeDiv = document.getElementById("qrcodeDiv");
+		qrcodeDiv.innerHTML = "";
+		new QRCode(qrcodeDiv, elements[index]).makeCode(elText.value);
+	}
+
+	function clear_gen(){
+		$("#input_qr").val("");
+		$("#qrcodeDiv").html("");
+	}
+
+	function getUrl(e,param){
+		analyticCode.getUrl(param,e,function(url1,url2){
+			e.nextElementSibling.innerHTML = url1;
+			e.previousElementSibling.src = url2;
+		});
+	}
+</script>
+</body>
+</html>
