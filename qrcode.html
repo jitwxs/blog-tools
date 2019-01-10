@@ -66,9 +66,9 @@
 	    <div role="tabpanel" class="tab-pane fade" id="disQr_tab">
 	    	<div class="panel panel-info">
 	            <div class="panel-body">
-	            	<label>上传图片：</label>
-	            	<input type="file" onchange="getUrl(this,'file-url')"/>
-			        <p class="form-control-static"></p>
+	            	<input type="file" onchange="getUrl(this,'file-url')"/></br>
+	            	<label>识别结果：</label>
+	            	<p id="qrResult" class="form-control-static"></p>
 	            </div>
 	            <div class="panel-footer">
 	              基于llqrcode.js实现的二维码识别
@@ -79,7 +79,7 @@
     </div>
     <nav class="navbar navbar-default navbar-fixed-bottom">
 	  <div class="container" style="text-align: center;">
-	    <div><a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:gray;">苏 ICP 备 16061429 号</a></div>
+	    <div><a href="https://www.miitbeian.gov.cn/" target="_blank" style="color:gray;">苏 ICP 备 16061429 号</a></div>
 	        <div style="margin-top: 5px;">Designed By <a href="http://www.jitwxs.cn" target="_blank"> Jitwxs </a> &copy; 2018 </div>
 	  </div>
 	</nav>
@@ -117,9 +117,12 @@
 	}
 
 	function getUrl(e,param){
+		console.log('....')
+		$("#qrResult").text("");
 		analyticCode.getUrl(param,e,function(url1,url2){
-			e.nextElementSibling.innerHTML = url1;
-			e.previousElementSibling.src = url2;
+			// console.log(url1);console.log(url2);
+			$("#qrResult").text(url1);
+			// e.previousElementSibling.src = url2;
 		});
 	}
 </script>
